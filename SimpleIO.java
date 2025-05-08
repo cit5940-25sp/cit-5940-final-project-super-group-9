@@ -62,3 +62,85 @@ public class SimpleIO{
             }
         }, 1, 1,  TimeUnit.SECONDS);
     }
+
+    public String run() throws IOException {
+        boolean running = true;
+
+        screen.clear();
+        printString(0, 0, "> ");
+        cursorPosition = 2;
+        updateScreen();
+
+        while (running && secondsRemaining > 0) {
+            KeyStroke keyStroke = terminal.pollInput();
+            if (keyStroke != null) {
+                switch (keyStroke.getKeyType()) {
+                    case Character:
+                        handleCharacter(keyStroke.getCharacter());
+                        break;
+                    case Backspace:
+                        handleBackspace();
+                        break;
+                    case Enter:
+                    case EOF:
+                    case Escape:
+                        running = false;
+                        //handleEnter();
+                        break;
+                    default:
+                        break;
+                }
+                updateScreen();
+            }
+
+            // Small delay to prevent CPU hogging
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        // Shutdown timer
+        scheduler.shutdown();
+        screen.close();
+        terminal.close();
+        if (secondsRemaining > 0){
+            return currentInput.toString();
+        }else{
+            return null;
+        }
+    }
+
+    private void handleCharacter(char c) {
+        currentInput.insert(cursorPosition - 2, c);
+        cursorPosition++;
+        updateSuggestions();
+    }
+
+    private void handleBackspace() {
+        if (cursorPosition > 2) {
+            currentInput.deleteCharAt(cursorPosition - 3);
+            cursorPosition--;
+            updateSuggestions();
+        }
+    }
+
+    private void handleEnter() throws IOException {
+        int currentRow = screen.getCursorPosition().getRow();
+        currentRow += 1 + suggestions.size();
+        printString(0, currentRow, "> ");
+        currentInput = new StringBuilder();
+        cursorPosition = 2;
+        suggestions.clear();
+    }
+
+    private void updateSuggestions() {
+        suggestions.clear();
+        String prefix = currentInput.toString();
+        List<String> dictionary = model.getSuggestions(prefix);
+        if (!prefix.isEmpty()) {
+            for (String word : dictionary) {
+                suggestions.add(word);
+            }
+        }
+    }

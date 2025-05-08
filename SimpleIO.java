@@ -144,3 +144,43 @@ public class SimpleIO{
             }
         }
     }
+
+    private void updateScreen() throws IOException {
+        synchronized (screen) {
+            screen.clear();
+
+            // Print timer at top right
+            String timerText = "Time: " + secondsRemaining + "s";
+            TerminalSize size = screen.getTerminalSize();
+            printString(size.getColumns() - timerText.length(), 0, timerText);
+
+            // Print current command line
+            printString(0, 0, "> " + currentInput.toString());
+
+            // Print suggestions
+            int row = 1;
+            for (String suggestion : suggestions) {
+                printString(2, row++, suggestion);
+            }
+
+            screen.setCursorPosition(new TerminalPosition(cursorPosition, 0));
+            screen.refresh();
+        }
+    }
+
+    private void printString(int column, int row, String text) {
+        for (int i = 0; i < text.length(); i++) {
+            screen.setCharacter(column + i, row,
+                    new TextCharacter(text.charAt(i),
+                            TextColor.ANSI.WHITE, TextColor.ANSI.BLACK));
+        }
+    }
+
+
+    public static void main(String[] args) {
+        GameModel model = new GameModel();
+        model.initialData();
+        String x = new SimpleIO().getInput(model);
+        System.out.println(x);
+    }
+}

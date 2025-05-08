@@ -4,7 +4,7 @@
  */
 public interface Observable {
     // add observer
-    void add(Observer observer);
+    void addObserver(Observer observer);
     // delete observer
     //void remove(Observer observer);
     // notify observer

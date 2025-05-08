@@ -1,9 +1,9 @@
 public class GameView extends View implements Observer{
-    
+
     public GameView(){
         ;
     }
-    
+
     public void showMessage(){
         ;
     }

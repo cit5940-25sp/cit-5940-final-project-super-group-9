@@ -63,4 +63,5 @@ public class LinkTest {
         // Print the string representation of the Links object
         System.out.println(links.toString());
     }
+
 }

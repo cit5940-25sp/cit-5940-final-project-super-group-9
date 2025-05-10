@@ -2,15 +2,15 @@ package AutoComplete;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Autocomplete implements IAutocomplete {
-    private Node root;
+public class Autocomplete implements AutoComplete.IAutocomplete {
+    private AutoComplete.Node root;
     private int k;
 
     /**
      * Initializes an empty Autocomplete object.
      */
     public Autocomplete(int k) {
-        root = new Node();
+        root = new AutoComplete.Node();
         this.k = k;
     }
 
@@ -67,14 +67,14 @@ public class Autocomplete implements IAutocomplete {
             return;
         }
         // Start from the root of the Trie
-        Node current = root;
+        AutoComplete.Node current = root;
         // Iterate through each character in the word
         for (char c : word.toCharArray()) {
             // Get the index of the character in the references array
             int index = getIndex(c);
             // If the node at the index does not exist, create a new node
             if (current.getReferences()[index] == null) {
-                current.getReferences()[index] = new Node();
+                current.getReferences()[index] = new AutoComplete.Node();
             }
             // Increment the prefix count of the current node
             current.setPrefixes(current.getPrefixes() + 1);
@@ -82,7 +82,7 @@ public class Autocomplete implements IAutocomplete {
             current = current.getReferences()[index];
         }
         // Set the term for the current node
-        current.setTerm(new Term(word, weight));
+        current.setTerm(new AutoComplete.Term(word, weight));
         // Increment the prefix count of the current node
         current.setPrefixes(current.getPrefixes() + 1);
         // Increment the word count of the current node
@@ -101,7 +101,7 @@ public class Autocomplete implements IAutocomplete {
      * or null if the prefix is invalid or not found
      */
     @Override
-    public Node getSubTrie(String prefix) {
+    public AutoComplete.Node getSubTrie(String prefix) {
         // Convert the prefix to lowercase
         prefix = prefix.toLowerCase();
         // Check if the prefix is valid
@@ -109,7 +109,7 @@ public class Autocomplete implements IAutocomplete {
             return null;
         }
         // Start from the root of the Trie
-        Node current = root;
+        AutoComplete.Node current = root;
         // Iterate through each character in the prefix
         for (char c : prefix.toCharArray()) {
             // Get the index of the character in the references array
@@ -139,7 +139,7 @@ public class Autocomplete implements IAutocomplete {
     @Override
     public int countPrefixes(String prefix) {
         // Get the subtrie corresponding to the given prefix
-        Node current = getSubTrie(prefix);
+        AutoComplete.Node current = getSubTrie(prefix);
         // If the subtrie does not exist, return 0
         if (current == null) {
             return 0;
@@ -155,7 +155,7 @@ public class Autocomplete implements IAutocomplete {
      * @param current     the current node in the Trie to start adding suggestions from
      * @param suggestions the list to which suggestions will be added
      */
-    public boolean addSuggestionsHelper(Node current, List<ITerm> suggestions) {
+    public boolean addSuggestionsHelper(AutoComplete.Node current, List<AutoComplete.ITerm> suggestions) {
         // If the current node is null, return immediately
         if (current == null) {
             return true;
@@ -163,7 +163,7 @@ public class Autocomplete implements IAutocomplete {
         // If the current node represents a word (i.e., its word count is greater than 0)
         if (current.getWords() > 0) {
             // Create a copy of the term at the current node
-            Term copyTerm = new Term(current.getTerm().getTerm(),
+            AutoComplete.Term copyTerm = new AutoComplete.Term(current.getTerm().getTerm(),
                     current.getTerm().getWeight());
             // Add the copied term to the suggestions list
             suggestions.add(copyTerm);
@@ -172,7 +172,7 @@ public class Autocomplete implements IAutocomplete {
             }
         }
         // Get the array of child nodes of the current node
-        Node[] node = current.getReferences();
+        AutoComplete.Node[] node = current.getReferences();
         // If the array of child nodes is not null
         if (node != null) {
             // Iterate through each child node in the array
@@ -199,12 +199,12 @@ public class Autocomplete implements IAutocomplete {
      * @return a list of suggestions based on the given prefix
      */
     @Override
-    public List<ITerm> getSuggestions(String prefix) {
+    public List<AutoComplete.ITerm> getSuggestions(String prefix) {
         // Initialize an empty list to store suggestions
-        List<ITerm> suggestions = new ArrayList<>();
+        List<AutoComplete.ITerm> suggestions = new ArrayList<>();
         // Convert the prefix to lowercase
         prefix = prefix.toLowerCase();
-        Node current = getSubTrie(prefix);
+        AutoComplete.Node current = getSubTrie(prefix);
         // Check if the prefix is invalid or no subtrie is found
         if (!isValidString(prefix) || current == null) {
             return suggestions;

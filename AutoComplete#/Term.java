@@ -1,5 +1,5 @@
 package AutoComplete;
-public class Term implements ITerm {
+public class Term implements AutoComplete.ITerm {
 
     private String term;
     private long weight;
@@ -21,7 +21,7 @@ public class Term implements ITerm {
 
 
     @Override
-    public int compareTo(ITerm that) {
+    public int compareTo(AutoComplete.ITerm that) {
         return this.term.compareTo(that.getTerm());
     }
 

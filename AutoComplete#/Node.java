@@ -2,7 +2,7 @@ package AutoComplete;
 
 public class Node {
 
-    private Term term;
+    private AutoComplete.Term term;
     private int words;
     private int prefixes;
     private Node[] references;
@@ -12,7 +12,7 @@ public class Node {
      * useful for writing tests.
      */
     public Node() {
-        this.term = new Term("", 0);
+        this.term = new AutoComplete.Term("", 0);
         this.words = 0;
         this.prefixes = 0;
         this.references = new Node[128];
@@ -31,17 +31,17 @@ public class Node {
         if (weight < 0) {
             throw new IllegalArgumentException("weight cannot be negative");
         }
-        this.term = new Term(query, weight);
+        this.term = new AutoComplete.Term(query, weight);
         this.words = 0;
         this.prefixes = 0;
         this.references = new Node[26];
     }
 
-    public Term getTerm() {
+    public AutoComplete.Term getTerm() {
         return term;
     }
 
-    public void setTerm(Term term) {
+    public void setTerm(AutoComplete.Term term) {
         this.term = term;
     }
 

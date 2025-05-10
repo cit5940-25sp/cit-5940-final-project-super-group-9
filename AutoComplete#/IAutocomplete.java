@@ -19,7 +19,7 @@ public interface IAutocomplete {
      * @return the root of the subTrie corresponding to the last character of
      * the prefix. If the prefix is not represented in the trie, return null.
      */
-    public Node getSubTrie(String prefix);
+    public AutoComplete.Node getSubTrie(String prefix);
 
 
     /**
@@ -40,6 +40,6 @@ public interface IAutocomplete {
      * prefix. Return an empty list if there are no ITerm object starting
      * with prefix.
      */
-    public List<ITerm> getSuggestions(String prefix);
+    public List<AutoComplete.ITerm> getSuggestions(String prefix);
 
 }

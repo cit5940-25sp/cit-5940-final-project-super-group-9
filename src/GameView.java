@@ -1,5 +1,3 @@
-package src;
-
 public class GameView extends View implements Observer {
 
     public GameView(){

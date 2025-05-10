@@ -17,7 +17,7 @@ public class GameModel extends Model implements Observable {
     // GameStatus object to manage the current status of the game
     private GameStatus gameStatus;
     // MovieDate object to handle all movie-related data
-    private MovieDate movieData;
+    private MovieData movieData;
     // IAutocomplete object to provide autocomplete suggestions for movie titles
     private IAutocomplete autocomplete;
     // Constant representing the maximum number of suggestions to be provided by the autocomplete feature
@@ -27,6 +27,7 @@ public class GameModel extends Model implements Observable {
     // Boolean flag indicating whether the game has timed out
     private boolean timeOut;
     private String startMovie;
+    private String specifiedActor;
     /**
      * Constructor for the GameModel class.
      * Initializes the list of observers and sets the timeout flag to false.
@@ -37,11 +38,21 @@ public class GameModel extends Model implements Observable {
         // Set the initial timeout state to false
         timeOut = false;
         startMovie = "Mission: Impossible";
-        gameStatusString = "The start movie is '" + startMovie + "'";
+        specifiedActor = "Tom cruise";
+        gameStatusString = "The start movie is '" + startMovie + "'\n";
+        gameStatusString += "The specified actor is '" + specifiedActor + "'\n";
     }
 
-
-
+    public void gameOver(){
+        Player player = gameStatus.getWinner();
+        Stuff stuff = movieData.getStuffByName(specifiedActor);
+        if(player == null || !player.hasStuff(stuff)){
+            gameStatusString = "There's no winner.";
+        }else{
+            gameStatusString = "Winner is " + player.toString();
+        }
+        notifyUI();
+    }
     /**
      * Initializes the game data required for the game model.
      * This method creates instances of GameStatus, MovieDate, and Autocomplete,
@@ -51,7 +62,7 @@ public class GameModel extends Model implements Observable {
         // Create a new instance of GameStatus to manage the game state
         gameStatus = new GameStatus();
         // Create a new instance of MovieDate to handle movie-related data
-        movieData = new MovieDate();
+        movieData = new MovieData();
         // Create a new instance of Autocomplete with the specified number of suggestions
         autocomplete = new Autocomplete(SUGGESTION);
         // Iterate through all movies in the movie data
@@ -148,8 +159,10 @@ public class GameModel extends Model implements Observable {
     }
 
     public void addPlayer(Player player){
-        player.play(movieData.getMovieByTitle(startMovie.toLowerCase()));
+        Movie movie = movieData.getMovieByTitle(startMovie.toLowerCase());
+        player.play(movie);
         gameStatus.addPLayer(player);
+        gameStatus.addUsedMovie(movie);
     }
 
     public void nextRound(){

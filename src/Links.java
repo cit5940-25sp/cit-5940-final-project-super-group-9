@@ -1,9 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.*;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Set;
 
 public class Links {
     private List<Link> links;
@@ -26,6 +21,17 @@ public class Links {
         currentMovie = null;
         // Initialize the connections map as a Hashtable
         connections = new Hashtable<>();
+    }
+
+    public boolean hasStuff(Stuff stuff){
+        for(Link link : links){
+            Map.Entry<Stuff, Stuff> connection = link.getConnection();
+            Stuff m1 = connection.getKey();
+            if(m1.compareTo(stuff) == 0){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -133,7 +139,8 @@ public class Links {
         // Iterate through the remaining sets of genres in the list
         for(int i = 1; i < list.size(); i++){
             // Retain only the elements that are present in both commonElements and the current set
-            commonElements.retainAll(list.get(i));
+            Set<Genre> other = new HashSet<>(list.get(i));
+            commonElements.retainAll(other);
         }
         // Initialize the common genre variable to null
         Genre commonGenre = null;

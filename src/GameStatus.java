@@ -110,6 +110,10 @@ public class GameStatus {
         }
         return r;
     }
+    public void addUsedMovie(Movie movie){
+        usedMovies.add(movie);
+    }
+
     public void nextRound(){
         round++;
         currentPlayer = getNextPlayer();

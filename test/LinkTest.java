@@ -15,7 +15,7 @@ public class LinkTest {
     @Test
     public void testConnection() {
         // Create a new MovieDate instance to manage movie data
-        MovieDate movieData = new MovieDate();
+        MovieData movieData = new MovieData();
         // Retrieve a movie by its title from the movie data
         Movie movie = movieData.getMovieByTitle("mission: impossible");
         // Retrieve another movie by its title from the movie data

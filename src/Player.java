@@ -57,6 +57,10 @@ public class Player {
         }
     }
 
+    public boolean hasStuff(Stuff name){
+        return links.hasStuff(name);
+    }
+
     /**
      * Retrieves the common genre of the player's links.
      *

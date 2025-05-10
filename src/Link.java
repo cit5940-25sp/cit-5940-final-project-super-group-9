@@ -37,6 +37,8 @@ public class Link implements Comparable<Link>{
         return movie1;
     }
 
+
+
     public String combinString(String str1, String str2){
         if(str1.compareTo(str2) > 0){
             return str2 + " " + str1;
@@ -65,6 +67,14 @@ public class Link implements Comparable<Link>{
             shareString = combinString(connectJob1, connectJob2);
         }
         return shareString;
+    }
+
+    public Map.Entry<Stuff, Stuff> getConnection(){
+        if(connections.size() > 0 ){
+            return connections.get(shareIndex);
+        }else{
+            return null;
+        }
     }
 
     /**

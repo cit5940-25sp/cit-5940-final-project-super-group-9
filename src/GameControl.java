@@ -1,8 +1,8 @@
 package src;
 
 /**
- * src.GameControl class extends the base Control class, acting as a controller in the MVC architecture.
- * It is responsible for handling user input using the SimpleIO class.
+ * src.GameControl class extends the base src.Control class, acting as a controller in the MVC architecture.
+ * It is responsible for handling user input using the src.SimpleIO class.
  */
 public class GameControl extends Control {
 
@@ -11,10 +11,10 @@ public class GameControl extends Control {
 
     /**
      * Initiates the input handling process.
-     * Calls the runInput method of the SimpleIO instance with the model retrieved from the base Control class.
+     * Calls the runInput method of the src.SimpleIO instance with the model retrieved from the base src.Control class.
      */
     public void runInput(){
-        // Invoke the runInput method of SimpleIO with the model
+        // Invoke the runInput method of src.SimpleIO with the model
         SimpleIO simpleIO = new SimpleIO();
         simpleIO.runInput(getModel());
         // press any key to continue...
@@ -30,4 +30,4 @@ public class GameControl extends Control {
 
     }
 }
-2
+

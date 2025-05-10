@@ -1,4 +1,6 @@
-public class GameView extends View implements Observer{
+package src;
+
+public class GameView extends View implements Observer {
 
     public GameView(){
         ;
@@ -17,4 +19,3 @@ public class GameView extends View implements Observer{
         showMessage();
     }
 }
-1

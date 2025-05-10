@@ -32,7 +32,3 @@ public class Control {
         return Model;
     }
 }
-
-
-
-

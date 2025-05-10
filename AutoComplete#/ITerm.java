@@ -1,30 +1,27 @@
+/**
+ * Defines an interface for a term with a weight and a string representation.
+ * This interface can be implemented by classes that represent terms in an autocomplete system,
+ * where each term has an associated weight that can be used for sorting or ranking.
+ */
 package AutoComplete;
-import java.util.Comparator;
 
 /**
- * @author ericfouh
+ * The ITerm interface provides methods to retrieve the weight and the term string.
  */
-public interface ITerm
-        extends Comparable<ITerm> {
+public interface ITerm {
 
-
-
-    // Compares the two terms in lexicographic order by query.
-    public int compareTo(ITerm that);
-
-
-    // Returns a string representation of this term in the following format:
-    // the weight, followed by a tab, followed by the query.
-    public String toString();
-
-    // Required getters.
+    /**
+     * Retrieves the weight associated with the term.
+     * The weight can be used to rank terms, for example, in an autocomplete list.
+     *
+     * @return The weight of the term as a long value.
+     */
     public long getWeight();
 
+    /**
+     * Retrieves the string representation of the term.
+     *
+     * @return The term as a string.
+     */
     public String getTerm();
-
-    // Required setters (mostly for autograding purposes)
-    public void setWeight(long weight);
-
-    public String setTerm(String term);
-
 }

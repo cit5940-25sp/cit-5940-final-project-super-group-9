@@ -4,7 +4,7 @@ import java.io.IOException;
  * GameControl class extends the base Control class, acting as a controller in the MVC architecture.
  * It is responsible for handling user input using the SimpleIO class.
  */
-public class GameControl extends Control{
+public class GameControl extends Control {
 
     public GameControl(){
     }

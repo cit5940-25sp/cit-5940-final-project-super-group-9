@@ -1,15 +1,41 @@
+/**
+ * Represents a player in the game. Each player has a name and a set of links.
+ * The player can play movies, check if they are a winner, and check if they have finished the game.
+ */
 public class Player {
+    /**
+     * The name of the player.
+     */
     private String name;
+    /**
+     * The set of links associated with the player.
+     */
     private Links links;
 
-    // Create a new player with the given name and an empty link path
-    public Player(String name) {
+
+
+    /**
+     * Constructs a new Player object with the given name.
+     * Initializes the player's links as a new Links object.
+     *
+     * @param name The name of the player.
+     */
+    public Player(String name){
         this.name = name;
         links = new Links();
     }
-    // Try to make a move by playing the given movie
-    // If it's the first move, set it as the starting point
-    // Otherwise, try to connect it to the current path
+
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Plays a given movie. If the player's links are empty, sets the current movie in the links.
+     * Otherwise, attempts to add a link for the movie.
+     *
+     * @param movie The movie to be played.
+     * @return {@code true} if the movie is successfully played, {@code false} otherwise.
+     */
     public boolean play(Movie movie){
         if(links.isEmpty()){
             links.setCurrentMovie(movie);
@@ -18,7 +44,11 @@ public class Player {
         return links.addLink(movie);
     }
 
-    // Check if the player has completed a valid path with a shared genre
+    /**
+     * Checks if the player is a winner. A player is considered a winner if they have a common genre.
+     *
+     * @return {@code true} if the player is a winner, {@code false} otherwise.
+     */
     public boolean isWinner(){
         if (getGenre() != null){
             return true;
@@ -27,7 +57,11 @@ public class Player {
         }
     }
 
-    // Return the common genre (as a string) if one exists across the player's links
+    /**
+     * Retrieves the common genre of the player's links.
+     *
+     * @return The name of the common genre as a string, or {@code null} if there is no common genre.
+     */
     public String getGenre(){
         String str = null;
         Genre genre = links.getCommonGenre();
@@ -37,12 +71,15 @@ public class Player {
         return str;
     }
 
-    // Check if the player has used up all allowed links
+    /**
+     * Checks if the player has finished the game. A player has finished if their links are full.
+     *
+     * @return {@code true} if the player has finished, {@code false} otherwise.
+     */
     public boolean isFinished(){
         return links.isFull();
     }
 
-    // Print the player's name followed by their full path of links
     @Override
     public String toString() {
         String str = "Player: " + name + "\n";

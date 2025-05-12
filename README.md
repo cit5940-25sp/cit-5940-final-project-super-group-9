@@ -14,3 +14,4 @@ This is an example of a project directory for you to start working from. Please 
 |--- test
     |----- *Test.java (unit test files)
 ```
+I am unable to add the file "tmdb_5000_credits" into my "data" file, it is 40 MB, however, the maximum for github to upload a file is 20 MB
